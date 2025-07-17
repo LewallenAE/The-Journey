@@ -667,9 +667,9 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"jOXmm":[function(require,module,exports,__globalThis) {
-const popMotion = require("17db46bf2796d1f2");
+var _popmotion = require("popmotion");
 const ball = document.querySelector('.ball');
-popmotion.animate({
+(0, _popmotion.animate)({
     from: "0px",
     to: "300px",
     repeat: Infinity,
@@ -678,9 +678,28 @@ popmotion.animate({
     onUpdate (update) {
         ball.style.left = update;
     }
+}); /*
+
+
+const popmotion = require('popmotion');
+const ball = document.querySelector('.ball');
+
+
+popmotion.animate({
+    from: "0px",
+    to: "300px",
+    repeat: Infinity,
+    repeatType: "mirror",
+    type: "spring",
+    onUpdate(update) {
+    ball.style.left = update;
+    }
+
 });
 
-},{"17db46bf2796d1f2":"f70vB"}],"f70vB":[function(require,module,exports,__globalThis) {
+*/ 
+
+},{"popmotion":"f70vB"}],"f70vB":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "animate", ()=>(0, _indexMjs.animate));
@@ -767,7 +786,7 @@ var _cubicBezierMjs = require("./easing/cubic-bezier.mjs");
 var _stepsMjs = require("./easing/steps.mjs");
 var _utilsMjs = require("./easing/utils.mjs");
 
-},{"./animations/index.mjs":"8mu84","./animations/inertia.mjs":"4gjkq","./animations/generators/decay.mjs":"8SvQU","./animations/generators/spring.mjs":"j5Woq","./animations/generators/keyframes.mjs":"gUmrh","./utils/angle.mjs":"dTQge","./utils/apply-offset.mjs":"90dLM","./utils/attract.mjs":"3KNzC","./utils/clamp.mjs":"fIlRd","./utils/degrees-to-radians.mjs":"8WMZf","./utils/distance.mjs":"iczZ9","./utils/interpolate.mjs":"ib4h0","./utils/is-point-3d.mjs":"fBjQC","./utils/is-point.mjs":"dz1bN","./utils/mix-color.mjs":"8659o","./utils/mix-complex.mjs":"gjut0","./utils/mix.mjs":"79REc","./utils/pipe.mjs":"adVeu","./utils/point-from-vector.mjs":"kFsoJ","./utils/progress.mjs":"2fZqD","./utils/radians-to-degrees.mjs":"ckfVH","./utils/smooth-frame.mjs":"6BKvp","./utils/smooth.mjs":"iejxV","./utils/snap.mjs":"gYDHl","./utils/to-decimal.mjs":"bu7tG","./utils/velocity-per-frame.mjs":"ji6L1","./utils/velocity-per-second.mjs":"8j8dl","./utils/wrap.mjs":"3LQUC","./easing/index.mjs":"alt7b","./easing/cubic-bezier.mjs":"4W28D","./easing/steps.mjs":"aGFf4","./easing/utils.mjs":"dz9ST","@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"8mu84":[function(require,module,exports,__globalThis) {
+},{"./animations/index.mjs":"8mu84","./animations/inertia.mjs":false,"./animations/generators/decay.mjs":false,"./animations/generators/spring.mjs":false,"./animations/generators/keyframes.mjs":false,"./utils/angle.mjs":false,"./utils/apply-offset.mjs":false,"./utils/attract.mjs":false,"./utils/clamp.mjs":false,"./utils/degrees-to-radians.mjs":false,"./utils/distance.mjs":false,"./utils/interpolate.mjs":false,"./utils/is-point-3d.mjs":false,"./utils/is-point.mjs":false,"./utils/mix-color.mjs":false,"./utils/mix-complex.mjs":false,"./utils/mix.mjs":false,"./utils/pipe.mjs":false,"./utils/point-from-vector.mjs":false,"./utils/progress.mjs":false,"./utils/radians-to-degrees.mjs":false,"./utils/smooth-frame.mjs":false,"./utils/smooth.mjs":false,"./utils/snap.mjs":false,"./utils/to-decimal.mjs":false,"./utils/velocity-per-frame.mjs":false,"./utils/velocity-per-second.mjs":false,"./utils/wrap.mjs":false,"./easing/index.mjs":false,"./easing/cubic-bezier.mjs":false,"./easing/steps.mjs":false,"./easing/utils.mjs":false,"@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"8mu84":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "animate", ()=>animate);
@@ -2327,333 +2346,6 @@ function hasRepeatDelayElapsed(elapsed, duration, delay, isForwardPlayback) {
     return isForwardPlayback ? elapsed >= duration + delay : elapsed <= -delay;
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"4gjkq":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "inertia", ()=>inertia);
-var _indexMjs = require("./index.mjs");
-var _velocityPerSecondMjs = require("../utils/velocity-per-second.mjs");
-var _framesync = require("framesync");
-function inertia({ from = 0, velocity = 0, min, max, power = 0.8, timeConstant = 750, bounceStiffness = 500, bounceDamping = 10, restDelta = 1, modifyTarget, driver, onUpdate, onComplete, onStop }) {
-    let currentAnimation;
-    function isOutOfBounds(v) {
-        return min !== undefined && v < min || max !== undefined && v > max;
-    }
-    function boundaryNearest(v) {
-        if (min === undefined) return max;
-        if (max === undefined) return min;
-        return Math.abs(min - v) < Math.abs(max - v) ? min : max;
-    }
-    function startAnimation(options) {
-        currentAnimation === null || currentAnimation === void 0 || currentAnimation.stop();
-        currentAnimation = (0, _indexMjs.animate)(Object.assign(Object.assign({}, options), {
-            driver,
-            onUpdate: (v)=>{
-                var _a;
-                onUpdate === null || onUpdate === void 0 || onUpdate(v);
-                (_a = options.onUpdate) === null || _a === void 0 || _a.call(options, v);
-            },
-            onComplete,
-            onStop
-        }));
-    }
-    function startSpring(options) {
-        startAnimation(Object.assign({
-            type: "spring",
-            stiffness: bounceStiffness,
-            damping: bounceDamping,
-            restDelta
-        }, options));
-    }
-    if (isOutOfBounds(from)) startSpring({
-        from,
-        velocity,
-        to: boundaryNearest(from)
-    });
-    else {
-        let target = power * velocity + from;
-        if (typeof modifyTarget !== "undefined") target = modifyTarget(target);
-        const boundary = boundaryNearest(target);
-        const heading = boundary === min ? -1 : 1;
-        let prev;
-        let current;
-        const checkBoundary = (v)=>{
-            prev = current;
-            current = v;
-            velocity = (0, _velocityPerSecondMjs.velocityPerSecond)(v - prev, (0, _framesync.getFrameData)().delta);
-            if (heading === 1 && v > boundary || heading === -1 && v < boundary) startSpring({
-                from: v,
-                to: boundary,
-                velocity
-            });
-        };
-        startAnimation({
-            type: "decay",
-            from,
-            velocity,
-            timeConstant,
-            power,
-            restDelta,
-            modifyTarget,
-            onUpdate: isOutOfBounds(target) ? checkBoundary : undefined
-        });
-    }
-    return {
-        stop: ()=>currentAnimation === null || currentAnimation === void 0 ? void 0 : currentAnimation.stop()
-    };
-}
-
-},{"./index.mjs":"8mu84","../utils/velocity-per-second.mjs":"8j8dl","framesync":"jCIAd","@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"8j8dl":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "velocityPerSecond", ()=>velocityPerSecond);
-function velocityPerSecond(velocity, frameDuration) {
-    return frameDuration ? velocity * (1000 / frameDuration) : 0;
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"dTQge":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "angle", ()=>angle);
-var _radiansToDegreesMjs = require("./radians-to-degrees.mjs");
-var _incMjs = require("./inc.mjs");
-const angle = (a, b = (0, _incMjs.zeroPoint))=>(0, _radiansToDegreesMjs.radiansToDegrees)(Math.atan2(b.y - a.y, b.x - a.x));
-
-},{"./radians-to-degrees.mjs":"ckfVH","./inc.mjs":"fkVdT","@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"ckfVH":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "radiansToDegrees", ()=>radiansToDegrees);
-const radiansToDegrees = (radians)=>radians * 180 / Math.PI;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"90dLM":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "applyOffset", ()=>applyOffset);
-const applyOffset = (from, to)=>{
-    let hasReceivedFrom = true;
-    if (to === undefined) {
-        to = from;
-        hasReceivedFrom = false;
-    }
-    return (v)=>{
-        if (hasReceivedFrom) return v - from + to;
-        else {
-            from = v;
-            hasReceivedFrom = true;
-            return to;
-        }
-    };
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"3KNzC":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "attract", ()=>attract);
-parcelHelpers.export(exports, "attractExpo", ()=>attractExpo);
-parcelHelpers.export(exports, "createAttractor", ()=>createAttractor);
-const identity = (v)=>v;
-const createAttractor = (alterDisplacement = identity)=>(constant, origin, v)=>{
-        const displacement = origin - v;
-        const springModifiedDisplacement = -(0 - constant + 1) * (0 - alterDisplacement(Math.abs(displacement)));
-        return displacement <= 0 ? origin + springModifiedDisplacement : origin - springModifiedDisplacement;
-    };
-const attract = createAttractor();
-const attractExpo = createAttractor(Math.sqrt);
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"8WMZf":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "degreesToRadians", ()=>degreesToRadians);
-const degreesToRadians = (degrees)=>degrees * Math.PI / 180;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"iczZ9":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "distance", ()=>distance);
-var _isPointMjs = require("./is-point.mjs");
-var _isPoint3DMjs = require("./is-point-3d.mjs");
-var _incMjs = require("./inc.mjs");
-const distance1D = (a, b)=>Math.abs(a - b);
-function distance(a, b) {
-    if ((0, _incMjs.isNum)(a) && (0, _incMjs.isNum)(b)) return distance1D(a, b);
-    else if ((0, _isPointMjs.isPoint)(a) && (0, _isPointMjs.isPoint)(b)) {
-        const xDelta = distance1D(a.x, b.x);
-        const yDelta = distance1D(a.y, b.y);
-        const zDelta = (0, _isPoint3DMjs.isPoint3D)(a) && (0, _isPoint3DMjs.isPoint3D)(b) ? distance1D(a.z, b.z) : 0;
-        return Math.sqrt(Math.pow(xDelta, 2) + Math.pow(yDelta, 2) + Math.pow(zDelta, 2));
-    }
-}
-
-},{"./is-point.mjs":"dz1bN","./is-point-3d.mjs":"fBjQC","./inc.mjs":"fkVdT","@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"dz1bN":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "isPoint", ()=>isPoint);
-const isPoint = (point)=>point.hasOwnProperty('x') && point.hasOwnProperty('y');
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"fBjQC":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "isPoint3D", ()=>isPoint3D);
-var _isPointMjs = require("./is-point.mjs");
-const isPoint3D = (point)=>(0, _isPointMjs.isPoint)(point) && point.hasOwnProperty('z');
-
-},{"./is-point.mjs":"dz1bN","@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"kFsoJ":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "pointFromVector", ()=>pointFromVector);
-var _degreesToRadiansMjs = require("./degrees-to-radians.mjs");
-const pointFromVector = (origin, angle, distance)=>{
-    angle = (0, _degreesToRadiansMjs.degreesToRadians)(angle);
-    return {
-        x: distance * Math.cos(angle) + origin.x,
-        y: distance * Math.sin(angle) + origin.y
-    };
-};
-
-},{"./degrees-to-radians.mjs":"8WMZf","@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"6BKvp":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "smoothFrame", ()=>smoothFrame);
-var _toDecimalMjs = require("./to-decimal.mjs");
-const smoothFrame = (prevValue, nextValue, duration, smoothing = 0)=>(0, _toDecimalMjs.toDecimal)(prevValue + duration * (nextValue - prevValue) / Math.max(smoothing, duration));
-
-},{"./to-decimal.mjs":"bu7tG","@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"bu7tG":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "toDecimal", ()=>toDecimal);
-const toDecimal = (num, precision = 2)=>{
-    precision = Math.pow(10, precision);
-    return Math.round(num * precision) / precision;
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"iejxV":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "smooth", ()=>smooth);
-var _smoothFrameMjs = require("./smooth-frame.mjs");
-var _framesync = require("framesync");
-const smooth = (strength = 50)=>{
-    let previousValue = 0;
-    let lastUpdated = 0;
-    return (v)=>{
-        const currentFramestamp = (0, _framesync.getFrameData)().timestamp;
-        const timeDelta = currentFramestamp !== lastUpdated ? currentFramestamp - lastUpdated : 0;
-        const newValue = timeDelta ? (0, _smoothFrameMjs.smoothFrame)(previousValue, v, timeDelta, strength) : previousValue;
-        lastUpdated = currentFramestamp;
-        previousValue = newValue;
-        return newValue;
-    };
-};
-
-},{"./smooth-frame.mjs":"6BKvp","framesync":"jCIAd","@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"gYDHl":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "snap", ()=>snap);
-const snap = (points)=>{
-    if (typeof points === 'number') return (v)=>Math.round(v / points) * points;
-    else {
-        let i = 0;
-        const numPoints = points.length;
-        return (v)=>{
-            let lastDistance = Math.abs(points[0] - v);
-            for(i = 1; i < numPoints; i++){
-                const point = points[i];
-                const distance = Math.abs(point - v);
-                if (distance === 0) return point;
-                if (distance > lastDistance) return points[i - 1];
-                if (i === numPoints - 1) return point;
-                lastDistance = distance;
-            }
-        };
-    }
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"ji6L1":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "velocityPerFrame", ()=>velocityPerFrame);
-function velocityPerFrame(xps, frameDuration) {
-    return xps / (1000 / frameDuration);
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"3LQUC":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "wrap", ()=>wrap);
-const wrap = (min, max, v)=>{
-    const rangeSize = max - min;
-    return ((v - min) % rangeSize + rangeSize) % rangeSize + min;
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"4W28D":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "cubicBezier", ()=>cubicBezier);
-var _indexMjs = require("./index.mjs");
-const a = (a1, a2)=>1.0 - 3.0 * a2 + 3.0 * a1;
-const b = (a1, a2)=>3.0 * a2 - 6.0 * a1;
-const c = (a1)=>3.0 * a1;
-const calcBezier = (t, a1, a2)=>((a(a1, a2) * t + b(a1, a2)) * t + c(a1)) * t;
-const getSlope = (t, a1, a2)=>3.0 * a(a1, a2) * t * t + 2.0 * b(a1, a2) * t + c(a1);
-const subdivisionPrecision = 0.0000001;
-const subdivisionMaxIterations = 10;
-function binarySubdivide(aX, aA, aB, mX1, mX2) {
-    let currentX;
-    let currentT;
-    let i = 0;
-    do {
-        currentT = aA + (aB - aA) / 2.0;
-        currentX = calcBezier(currentT, mX1, mX2) - aX;
-        if (currentX > 0.0) aB = currentT;
-        else aA = currentT;
-    }while (Math.abs(currentX) > subdivisionPrecision && ++i < subdivisionMaxIterations);
-    return currentT;
-}
-const newtonIterations = 8;
-const newtonMinSlope = 0.001;
-function newtonRaphsonIterate(aX, aGuessT, mX1, mX2) {
-    for(let i = 0; i < newtonIterations; ++i){
-        const currentSlope = getSlope(aGuessT, mX1, mX2);
-        if (currentSlope === 0.0) return aGuessT;
-        const currentX = calcBezier(aGuessT, mX1, mX2) - aX;
-        aGuessT -= currentX / currentSlope;
-    }
-    return aGuessT;
-}
-const kSplineTableSize = 11;
-const kSampleStepSize = 1.0 / (kSplineTableSize - 1.0);
-function cubicBezier(mX1, mY1, mX2, mY2) {
-    if (mX1 === mY1 && mX2 === mY2) return 0, _indexMjs.linear;
-    const sampleValues = new Float32Array(kSplineTableSize);
-    for(let i = 0; i < kSplineTableSize; ++i)sampleValues[i] = calcBezier(i * kSampleStepSize, mX1, mX2);
-    function getTForX(aX) {
-        let intervalStart = 0.0;
-        let currentSample = 1;
-        const lastSample = kSplineTableSize - 1;
-        for(; currentSample !== lastSample && sampleValues[currentSample] <= aX; ++currentSample)intervalStart += kSampleStepSize;
-        --currentSample;
-        const dist = (aX - sampleValues[currentSample]) / (sampleValues[currentSample + 1] - sampleValues[currentSample]);
-        const guessForT = intervalStart + dist * kSampleStepSize;
-        const initialSlope = getSlope(guessForT, mX1, mX2);
-        if (initialSlope >= newtonMinSlope) return newtonRaphsonIterate(aX, guessForT, mX1, mX2);
-        else if (initialSlope === 0.0) return guessForT;
-        else return binarySubdivide(aX, intervalStart, intervalStart + kSampleStepSize, mX1, mX2);
-    }
-    return (t)=>t === 0 || t === 1 ? t : calcBezier(getTForX(t), mY1, mY2);
-}
-
-},{"./index.mjs":"alt7b","@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}],"aGFf4":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "steps", ()=>steps);
-var _clampMjs = require("../utils/clamp.mjs");
-const steps = (steps, direction = 'end')=>(progress)=>{
-        progress = direction === 'end' ? Math.min(progress, 0.999) : Math.max(progress, 0.001);
-        const expanded = progress * steps;
-        const rounded = direction === 'end' ? Math.floor(expanded) : Math.ceil(expanded);
-        return (0, _clampMjs.clamp)(0, 1, rounded / steps);
-    };
-
-},{"../utils/clamp.mjs":"fIlRd","@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}]},["c7w0s","jOXmm"], "jOXmm", "parcelRequire94c2", {})
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"bLLxF"}]},["c7w0s","jOXmm"], "jOXmm", "parcelRequire94c2", {})
 
 //# sourceMappingURL=01 JavaScript Libraries.e02fbd41.js.map
