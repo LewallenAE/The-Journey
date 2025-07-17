@@ -1,0 +1,23 @@
+html {
+  box-sizing: border-box;
+}
+
+*, :before, :after {
+  box-sizing: inherit;
+}
+
+body {
+  flex-direction: column;
+  place-items: center;
+  display: flex;
+}
+
+.ball {
+  background-color: #00f;
+  border: 1px solid #000;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+/*# sourceMappingURL=01 JavaScript Libraries.3a01df49.css.map */
