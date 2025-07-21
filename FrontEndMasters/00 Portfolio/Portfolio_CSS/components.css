@@ -1,0 +1,31 @@
+.card {
+  background-color: var(--platinum);
+  border-radius: 1rem;
+  box-shadow: 25px 25px 25px rgba(0, 0, 0, 0.1);
+  margin: 15px auto;
+  display: inline-block;
+  width: 100%;
+  max-width: 600px;
+}
+
+.text-wrapper {
+  margin: 25px;
+}
+
+.anthony-img-container {
+  overflow: hidden;
+  border-radius: 5%;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.anthony-img-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  object-position: top;
+  border-radius: var(--corners);
+}

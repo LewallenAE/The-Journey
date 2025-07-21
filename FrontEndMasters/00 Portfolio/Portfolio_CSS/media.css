@@ -1,0 +1,39 @@
+@media (min-width: 750px) {
+  :root {
+    --base-font-size: 1.125rem;
+  }
+
+  .wrapper {
+    padding: 5rem;
+  }
+
+  .main-article {
+    grid-template-columns: 1fr 1fr;
+    text-align: left;
+    align-items: center;
+  }
+
+  .icons {
+    justify-content: flex-start;
+  }
+
+  .anthony-img-container {
+    max-width: 100%;
+    height: 350px;
+  }
+
+  .anthony-img-container img {
+    object-fit: cover;
+    height: 100%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .anthony-img-container {
+    height: 450px;
+  }
+
+  .anthony-img-container img {
+    max-height: 450px;
+  }
+}

@@ -1,0 +1,1 @@
+# The CSS full course was about making a portfolio and is in the 00 Portfolio section

@@ -1,0 +1,35 @@
+.icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.Bluesky {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  transition: transform 0.2s ease-in-out;
+}
+
+ul svg {
+  width: 36px;
+  height: 36px;
+}
+
+.social {
+  fill: var(--windsurfing);
+}
+
+.social:hover {
+  fill: var(--marina);
+}
+
+.text-center {
+  text-align: center;
+}
