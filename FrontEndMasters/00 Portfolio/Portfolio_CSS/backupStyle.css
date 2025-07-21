@@ -1,37 +1,4 @@
-/* starting variables for the site */
-:root {
-  --white: #f9faff;
-  --platinum: #e3e4e8;
-  --windsurfing: #32779b;
-  --marina: #5a91c7;
-  --gray: #9a9a9a;
-  --onyx: #3c3d44;
-  --charcoal: #343c47;
-  --corners: 24px 0;
-  --base-font-size: 1rem;
-}
-/* set the box sizing to border-box for layouts */
-html {
-  box-sizing: border-box;
-}
-*,
-*::before, /* Anything before the tag */
-*::after { /* Anything after the tag */
-  box-sizing: inherit;
-}
-/* Basic page set to our font size and font family. Link to the font family in CodePen under Settings - CSS - External stylesheets and pens. */
-body {
-  font-size: var(--base-font-size);
-  font-family: "Inter", sans-serif; /* all elements within body inherit this font family */
-  margin:0;
-  padding: 0;
-  box-sizing: border-box;
-  width: 100%;
-  overflow-x: hidden;
-  color: var(--onyx);
-}
-
-
+/*
 .wrapper {
   
   max-width: 1400px;
@@ -41,25 +8,22 @@ body {
 
 
 .card {
-
   box-shadow: 25px 25px 25px;
-  width: 100%;
-  max-width: 300px;
-  padding: 1rem;
-  background: var(--platinum);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: var(--platinum);
   border-radius: 5%;
-  text-align: center;
-  overflow: hidden;
-  
+  margin: 15px;
   
 }
 
-.responsive-text {
-  font-size: clamp(.0.8rem, 2.5vw, 1.2rem);
+.card-title {
+  font-size: clamp(.1rem, 5vw, 2.5rem);
+  text-align: center;
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
-  line-height: 1.2;
 }
 
 /*
@@ -153,8 +117,8 @@ ul svg {
 
 
 .anthony-img-container {
-  display: flex;
-  overflow: hidden;
+  display: inline-block;
+  over-flow: hidden;
   border-radius: 5%;
   height: 175px;
   width: 300px;
@@ -162,7 +126,7 @@ ul svg {
 }
 
 .anthony-img-container img {
-  display: flex;
+  display: block;
 
 }
 
@@ -191,6 +155,24 @@ ul svg {
   gap: 2rem;
   text-align: center;
   
+}
+
+.footer-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  gap: 1rem;
+  
+}
+
+.footer-icons li {
+  list-style-type: none;
+}
+
+.About, .Resume, .Projects, .Blog, .YouTube, .Contact {
+  font-size: .75rem;
+}
 
 @media (min-width: 750px) {
   
@@ -211,8 +193,8 @@ ul svg {
   
   .anthony-img-container {
     
-    display: inline-block;
-    overflow: hidden;
+     display: inline-block;
+    over-flow: hidden;
     border-radius: 5%;
     height: 350px;
     width: 95%;
@@ -259,10 +241,11 @@ ul svg {
   
   .anthony-img-container {
     
-    display: inline-block;
-    overflow: hidden;
+     display: inline-block;
+    over-flow: hidden;
     border-radius: 5%;
     height: 450px;
+    width: 600px
     width: 100%;
     box-shadow: 20px 20px 20px 1px;
     
