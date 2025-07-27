@@ -9,11 +9,17 @@ class Bookshelf {
         }
     }
 
-    printFavoriteBooks() {
+    /*printFavoriteBooks() {
         for (let i = 0; i < this.bookList.length; i++) {
             console.log(`Favorite book: ${i + 1} ${this.bookList[i]}`)
         }
-    }    
+    }  */
+   
+    printFavoriteBooks() {
+        this.bookList.forEach((book, index) => {
+            console.log(`Favorite book ${index + 1}: ${book}`);
+        });
+    }
 }
 
 const myBookShelf = new Bookshelf();

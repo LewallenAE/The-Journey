@@ -1,0 +1,7 @@
+/*
+
+!important overrides all other styles
+ID > class > element
+inline styling overrides IDs
+
+best practice is to use classes.....keep IDs to a minimum when possible.

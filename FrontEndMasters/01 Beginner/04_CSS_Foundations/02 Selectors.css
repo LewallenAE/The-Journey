@@ -1,0 +1,47 @@
+/*
+
+
+Selector selects a specific element 
+
+h1 {
+}
+
+.class {
+}
+
+# id {
+}
+
+section > h1 {
+}
+
+.className h1 {
+}
+
+etc
+
+
+NOTE you ARE allowed to give something multiple classes such as
+
+<article class="firstClass secondClass thirdClass fourthClass"> Stuff here can be styled with first second third and fourth class</article>
+
+This is NOT an example of multiple classes
+
+<article class="firstClass-secondClass-thirdClass-fourthClass"> Stuff here can only be styled with one class which is the class name of 
+firstClass-secondClass-thirdClass-fourthClass</article>
+
+.body p#blue {
+}.   this will select the body class with a p tag id named blue so something like this
+
+<article class="body">
+
+<h1> Not this one </h1>
+<p>Not this one either</p>
+<p id="blue"> This particle one will be selected</p>
+<div> <p> Not this one </p> 
+</div>
+
+
+</article>
+
+*/
