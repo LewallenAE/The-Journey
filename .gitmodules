@@ -1,3 +1,6 @@
 [submodule "FrontEndMaster/01 Beginner/04_CSS_Foundations/Project/fem-css-foundations"]
 	path = FrontEndMaster/01 Beginner/04_CSS_Foundations/Project/fem-css-foundations
 	url = http://github.com/emmabostian/fem-css-foundations
+[submodule "FrontEndMasters/01 Beginner/04_CSS_Foundations/Project/fem-css-foundatons"]
+	path = FrontEndMasters/01 Beginner/04_CSS_Foundations/Project/fem-css-foundatons
+	url = https://github.com/emmabostian/fem-css-foundations
