@@ -77,9 +77,11 @@ a {
   font-weight: bold;
 }
 
+/*
 header img {
-  grid-area: shopping-cart;
+  grid-area: shopping-cart;      <== not needed.
 }
+  */
 
 .nav {
   display: inline-block;
