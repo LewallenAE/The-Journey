@@ -7,7 +7,7 @@ Now what we are interested in right now is how this is read.
 
 Basically in terms of HTML (and not jsx or react) the html is read from top to bottom and once it hits the 
 
-<script> insert javascript name here.js </script> it stop immediately and doesn't load anything else.
+<script> insert javascript name here.js </script> it stops immediately and doesn't load anything else.
 
 
 Say we have a redsquare.

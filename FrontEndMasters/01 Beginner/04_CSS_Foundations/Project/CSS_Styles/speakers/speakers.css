@@ -1,1 +1,14 @@
 @import "../base/base.css";
+
+.speakers .main__title {
+    font-size: 98px;
+}
+
+.shopping-cart-icon--primary g path {
+    fill: var(--color-primary);
+}
+
+.speaker_photo {
+    width: 310px;
+    height: 310px;
+}
