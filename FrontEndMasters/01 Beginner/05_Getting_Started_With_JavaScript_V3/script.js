@@ -168,3 +168,79 @@ checkAnimal("Dog");
 checkAnimal(" ");
 checkAnimal(2); // 2 is not a string: Expected string
 checkAnimal(" Dogeljklwemiov 2"); // No match for: Dogeljklwemiov 2
+
+function printNumbers(num) {
+  console.log(num);
+  if (num >= 10) return;
+
+  console.log("less than ten");
+  printNumbers(num + 1);
+  console.log("Greater than or equal to ten.");
+}
+
+printNumbers(1); // Will print Greater than or equal to ten 9 times.
+
+/*
+
+use recursion to count all files in a file system if we want.
+
+function countFiles(item) {
+
+if (item.type === "file") retutrn 1
+
+let count = 0
+
+for (const child of item.children) {
+count += countFiles(child)
+}
+return count
+}
+
+console.log(countFiles(fileSystem))
+*/
+
+const data = [1, [2, 3], [4, [5, 6]], 7];
+
+function findMax(arr) {
+  let max = -Infinity;
+
+  for (const item of arr) {
+    if (Array.isArray(item)) {
+      const subMax = findMax(item);
+      max = Math.max(max, subMax);
+    } else {
+      max = Math.max(max, item);
+    }
+  }
+  return max;
+}
+
+console.log(findMax(data));
+
+//const theme1 =
+// user && etc
+
+// Optional Chaining
+
+const user = {
+  profile: {
+    settings: {
+      themse: "dark",
+    },
+  },
+};
+
+const theme2 = user?.profile?.settings?.theme;
+
+user?.notify?.();
+
+const allPositive = numbers.every((number) => {
+  return number > 0;
+});
+console.log(allPositive);
+
+const allLarge = numbers.every((number) => {
+  return number > 3;
+});
+
+console.log(allLarge);
